@@ -1,0 +1,13 @@
+# Dependencies 
+node_modules/
+.pnpm-store/
+
+# Build artifacts 
+dist/ build/ 
+.expo/ 
+*.tsbuildinfo
+
+# Environment secrets 
+.env 
+.env\*.local 
+*.env
