@@ -1,0 +1,13 @@
+// apps/api/drizzle.config.ts 
+import 'dotenv/config';
+import { defineConfig } from 'drizzle-kit';
+if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL is missing in drizzle.config.ts');
+
+}
+export default defineConfig({
+    schema: './src/db/schema.ts',
+    out: './drizzle',
+    dialect: 'postgresql',
+    dbCredentials: { url: process.env.DATABASE_URL, },
+});
