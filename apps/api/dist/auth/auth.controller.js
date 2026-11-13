@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
 import { RegisterDto } from './dto/register.dto.js';
+import { LoginDto } from './dto/login.dto.js';
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
@@ -20,6 +21,12 @@ let AuthController = class AuthController {
     }
     async register(dto) {
         return this.authService.register(dto);
+    }
+    async login(dto) {
+        return this.authService.login(dto);
+    }
+    async refreshToken(rawRefreshToken) {
+        return this.authService.refreshToken(rawRefreshToken);
     }
 };
 __decorate([
@@ -30,6 +37,22 @@ __decorate([
     __metadata("design:paramtypes", [RegisterDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
+__decorate([
+    Post('login'),
+    HttpCode(HttpStatus.OK),
+    __param(0, Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [LoginDto]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "login", null);
+__decorate([
+    Post('refresh-token'),
+    HttpCode(HttpStatus.OK),
+    __param(0, Body('refreshToken')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "refreshToken", null);
 AuthController = __decorate([
     Controller('auth'),
     __metadata("design:paramtypes", [AuthService])
