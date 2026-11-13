@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { AuthService } from './auth.service.js';
 import { AuthController } from './auth.controller.js';
+import { JwtAuthGuard } from './guards/jwt-auth.guard.js';
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
@@ -18,8 +19,8 @@ AuthModule = __decorate([
             JwtModule.register({}),
         ],
         controllers: [AuthController],
-        providers: [AuthService],
-        exports: [AuthService],
+        providers: [AuthService, JwtAuthGuard],
+        exports: [AuthService, JwtAuthGuard],
     })
 ], AuthModule);
 export { AuthModule };

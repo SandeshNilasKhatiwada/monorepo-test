@@ -10,10 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
 import { RegisterDto } from './dto/register.dto.js';
 import { LoginDto } from './dto/login.dto.js';
+import { CurrentUser } from './decorators/current-user.decorator.js';
+import { JwtAuthGuard } from './guards/jwt-auth.guard.js';
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
@@ -27,6 +29,9 @@ let AuthController = class AuthController {
     }
     async refreshToken(rawRefreshToken) {
         return this.authService.refreshToken(rawRefreshToken);
+    }
+    async getCurrentUser(user) {
+        return this.authService.getUserById(user.id);
     }
 };
 __decorate([
@@ -53,6 +58,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "refreshToken", null);
+__decorate([
+    Get('me'),
+    UseGuards(JwtAuthGuard),
+    __param(0, CurrentUser()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getCurrentUser", null);
 AuthController = __decorate([
     Controller('auth'),
     __metadata("design:paramtypes", [AuthService])

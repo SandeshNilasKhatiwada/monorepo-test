@@ -28,4 +28,12 @@ export declare class AuthController {
         accessToken: string;
         refreshToken: string;
     }>;
+    getCurrentUser(user: {
+        id: string;
+    }): Promise<{
+        id: string;
+        username: string;
+        email: string;
+        createdAt: Date;
+    }>;
 }
